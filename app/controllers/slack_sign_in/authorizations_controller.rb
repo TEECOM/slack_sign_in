@@ -1,6 +1,6 @@
 class SlackSignIn::AuthorizationsController < SlackSignIn::ApplicationController
   def create
-    redirect_to slack_login_url
+    redirect_to slack_login_url, flash: {proceed_to: proceed_to}
   end
 
   private
@@ -21,5 +21,9 @@ class SlackSignIn::AuthorizationsController < SlackSignIn::ApplicationController
       token_url: "https://slack.com/api/oauth.access",
       redirect_uri: callback_url,
     )
+  end
+
+  def proceed_to
+    params.require(:proceed_to)
   end
 end

@@ -2,7 +2,7 @@ require "test_helper"
 
 class SlackSignIn::AuthorizationTest < ActionDispatch::IntegrationTest
   test "redirecting to Slack for authorization" do
-    post slack_sign_in.authorization_url
+    post slack_sign_in.authorization_url, params: {proceed_to: "http://www.example.com/sessions"}
 
     assert_response :redirect
     assert_match "https://slack.com/oauth/authorize", response.location
@@ -11,6 +11,8 @@ class SlackSignIn::AuthorizationTest < ActionDispatch::IntegrationTest
     assert_equal "code", url_params[:response_type]
     assert_equal "http://www.example.com/slack_sign_in/callback", url_params[:redirect_uri]
     assert_equal "test.scope test.scope2", url_params[:scope]
+
+    assert_equal "http://www.example.com/sessions", flash[:proceed_to]
   end
 
   private
