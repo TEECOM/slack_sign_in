@@ -1,3 +1,5 @@
+require "oauth2"
+
 module SlackSignIn
   class Engine < ::Rails::Engine
     isolate_namespace SlackSignIn
