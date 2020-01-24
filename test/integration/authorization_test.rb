@@ -13,6 +13,7 @@ class SlackSignIn::AuthorizationTest < ActionDispatch::IntegrationTest
     assert_equal "test.scope test.scope2", url_params[:scope]
 
     assert_equal "http://www.example.com/sessions", flash[:proceed_to]
+    assert_equal url_params[:state], flash[:state]
   end
 
   private
