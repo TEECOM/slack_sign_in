@@ -7,5 +7,6 @@ FAKE_SLACK_SCOPES = ["test.scope", "test.scope2"]
 require_relative "../test/dummy/config/environment"
 
 require "rails/test_help"
+require "webmock/minitest"
 
 Minitest.backtrace_filter = Minitest::BacktraceFilter.new

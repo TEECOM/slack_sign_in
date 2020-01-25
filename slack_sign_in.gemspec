@@ -18,4 +18,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "standardrb"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "webmock"
 end
