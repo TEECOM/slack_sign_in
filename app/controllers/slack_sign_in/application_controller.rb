@@ -2,6 +2,8 @@ module SlackSignIn
   class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
 
+    private
+
     def client
       @_client ||= OAuth2::Client.new(
         SlackSignIn.client_id,
