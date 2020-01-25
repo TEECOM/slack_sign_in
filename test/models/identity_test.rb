@@ -60,6 +60,6 @@ class SlackSignIn::IdentityTest < ActiveSupport::TestCase
   private
 
   def identity_params(params)
-    params.to_json
+    params.deep_stringify_keys
   end
 end

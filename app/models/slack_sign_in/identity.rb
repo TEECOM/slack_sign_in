@@ -1,6 +1,6 @@
 class SlackSignIn::Identity
   def initialize(params)
-    @params = JSON.parse(params)
+    @params = params
   end
 
   def unique_id
