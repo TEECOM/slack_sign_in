@@ -14,6 +14,12 @@ module SlackSignIn
       end
     end
 
+    initializer "slack_sign_in.helpers" do
+      ActiveSupport.on_load :action_controller_base do
+        helper SlackSignIn::Engine.helpers
+      end
+    end
+
     initializer "slack_sign_in.mount" do |app|
       app.routes.prepend do
         mount SlackSignIn::Engine, at: app.config.slack_sign_in.root || "slack_sign_in"

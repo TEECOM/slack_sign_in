@@ -10,3 +10,11 @@ require "rails/test_help"
 require "webmock/minitest"
 
 Minitest.backtrace_filter = Minitest::BacktraceFilter.new
+
+class ActionView::TestCase
+  private
+
+  def assert_dom_equal(expected, actual, message = nil)
+    super expected.remove(/(\A|\n)\s*/), actual, message
+  end
+end
