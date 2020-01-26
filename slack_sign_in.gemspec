@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "oauth2", ">= 1.4.2"
   spec.add_dependency "rails", ">= 5.2.0"
 
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "standardrb"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "webmock"

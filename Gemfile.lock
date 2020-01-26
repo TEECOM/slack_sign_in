@@ -182,6 +182,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler
   slack_sign_in!
   sqlite3
   standardrb
