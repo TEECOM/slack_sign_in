@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     slack_sign_in (0.1.0)
-      oauth2
-      rails (~> 6.0.2, >= 6.0.2.1)
+      oauth2 (>= 1.4.2)
+      rails (>= 5.2.0)
 
 GEM
   remote: https://rubygems.org/
