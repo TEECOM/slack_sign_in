@@ -66,6 +66,71 @@ Before getting started, you'll likely need to set up a Slack application:
        ![Slack App Redirect URLs](./doc/images/redirect_urls.png)
      </details>
 
+## Configuration
+
+With your Slack application set up, the next step is to configure your Rails
+app to use it. Run `rails credentials:edit` to edit your app's
+[encrypted credentials](https://guides.rubyonrails.org/security.html#custom-credentials)
+and add the following:
+
+```yaml
+slack_sign_in:
+  client_id: "[Your client ID here]"
+  client_secret: "[Your client secret here]"
+```
+
+You're all set to use Slack sign-in now. The gem will automatically use these
+client credentials! :tada:
+
+Alternatively, you can provide the Slack credentials through an initializer
+and environment variables:
+
+```ruby
+# config/initializers/slack_sign_in.rb
+Rails.application.configure do
+  config.slack_sign_in.client_id = ENV.fetch("SLACK_CLIENT_ID")
+  config.slack_sign_in.client_secret = ENV.fetch("SLACK_CLIENT_SECRET")
+end
+```
+
+**:warning: Important:** Take care to protect your client secret. It's a secret
+after all!
+
+### Scopes
+
+By default, this gem will request the following scopes from Slack:
+
+  - `identity.basic`
+  - `identity.email`
+  - `identity.avatar`
+
+If these scopes don't suit your particular need, you can configure the gem to
+use any of the
+[supported Slack scopes](https://api.slack.com/docs/sign-in-with-slack#identity_scopes)
+through an initializer:
+
+```ruby
+# config/initializers/slack_sign_in.rb
+Rails.application.configure do
+  config.slack_sign_in.scopes = %w(identity.basic identity.team)
+end
+```
+
+### Mounting Root
+
+By default, this gem will mount its routes at `/slack_sign_in`. If this doesn't
+suit your needs, it can be configured through an initializer:
+
+```ruby
+# config/initializers/slack_sign_in.rb
+Rails.application.configure do
+  config.slack_sign_in.root = "sso/slack"
+end
+```
+
+In this example, the gem would add a callback URL of `/sso/slack/callback`
+rather than the default of `/slack_sign_in/callback`.
+
 ## Contributing
 
 For information on how to contribute to this project, check out the
