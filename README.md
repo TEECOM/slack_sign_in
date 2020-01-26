@@ -131,6 +131,112 @@ end
 In this example, the gem would add a callback URL of `/sso/slack/callback`
 rather than the default of `/slack_sign_in/callback`.
 
+## Usage
+
+This gem provides a `slack_sign_in_link` helper that generates a link that will
+kick off the sign-in process:
+
+```erb
+<%= slack_sign_in_link proceed_to: create_session_url %>
+
+<%= slack_sign_in_link "Sign In!", proceed_to: create_session_url %>
+
+<%= slack_sign_in_link proceed_to: create_session_url do %>
+  <div style="background: blue; padding: 10px; display: inline-block;">
+    <%= slack_sign_in_image %>
+  </div>
+<% end %>
+```
+
+<details>
+  <summary>Sign in link visuals :framed_picture:</summary>
+
+  ![Sign in links](./doc/images/sign_in_links.png)
+</details>
+
+Regardless of whether you use the default link, a text link, or a block link,
+the `proceed_to` argument is always required. After authenticating with Slack,
+we'll redirect to this URL with information on the authorization's success or
+failure for your application to handle.
+
+In most cases, that might look something like this:
+
+```ruby
+# config/routes.rb
+Rails.application.routes.draw do
+  # ...
+  get "sessions/create", to: "sessions#create", as: :create_session
+end
+```
+
+```ruby
+# app/controllers/sessions_controller.rb
+class SessionsController < ApplicationController
+  include SlackSignIn::Authorization
+
+  def create
+    if slack_authorization.successful?
+      render plain: slack_authorization.identity.name
+    else
+      render plain: slack_authorization.error
+    end
+  end
+end
+```
+
+#### The `SlackSignIn::Authorization` Concern
+
+The `SlackSignIn::Authorization` concern is the primary interface for accessing
+information about the Slack sign-in process. It exposes a single method,
+`slack_authorization`, which will give you a
+[`SlackSignIn::Result`](#slacksigninresult) for the recently completed Slack
+sign-in flow.
+
+In the majority of cases, you should be able to use the
+`SlackSignIn::Authorization` concern along with the `slack_authorization`
+method to accomplish what you want. In some cases, you may need direct access to
+the full Slack response, though.
+
+Before redirecting to the specified `proceed_to` URL, this gem will either set
+`flash[:slack_sign_in]["success"]` to the Slack response, or 
+`flash[:slack_sign_in]["error"]` to an
+[OAuth authorizaton code grant error](https://tools.ietf.org/html/rfc6749#section-4.1.2.1).
+If you need direct access to the Slack response information, this is how you can
+get it.
+
+#### `SlackSignIn::Result`
+
+The `SlackSignIn::Result` class provides an interface for handling the result of
+a Slack sign-in attempt. It exposes three instance methods:
+
+  1. `successful?` - to determine whether the sign-in attempt succeeded or not
+
+  2. `identity` - either `nil` or a [`SlackSignIn::Identity`](#slacksigninidentity)
+     instance with user identity information from Slack
+
+  3. `error` - either `nil` or an
+     [OAuth authorizaton code grant error](https://tools.ietf.org/html/rfc6749#section-4.1.2.1)
+
+#### `SlackSignIn::Identity`
+
+The `SlackSignIn::Identity` class decodes user identity information from Slack.
+It exposes this information through a handful of instance methods:
+
+  - `unique_id` - a unique identifier from Slack that can be used to look up
+    people
+
+  - `team_id` - the ID of the team used while signing in
+
+  - `user_id` - the ID of the user who signed in
+
+  - `name` - the name of the user who signed in
+
+  - `email` - the email of the user who signed in
+
+  - `avatar(size: 48)` - the avatar of the user who signed in
+    (in a specific size). Typically the sizes provided by slack are
+    `24x24`, `32x32`, `48x48`, `72x72`, `192x192`, and `512x512`.
+
 ## Contributing
 
 For information on how to contribute to this project, check out the
