@@ -26,6 +26,46 @@ gem "slack_sign_in"
 
 *Note:* This gem requires Rails 5.2 or newer.
 
+## Creating a Slack App
+
+Before getting started, you'll likely need to set up a Slack application:
+
+  1. Go to the [Slack applications list](https://api.slack.com/apps)
+
+  2. Either click **Create New App**, or select an existing application
+
+  3. Take note of your app's **Client ID** and **Client Secret**
+
+     <details>
+       <summary>Slack app credentials visual guide :framed_picture:</summary>
+
+       ![Slack App Credentials](./doc/images/app_credentials.png)
+     </details>
+
+  4. Under the **OAuth & Permissions** tab, add your app's callback URLs to the
+     list of **Redirect URLs** section.
+
+     This gem adds a single OAuth callback to your Rails application at
+     `/slack_sign_in/callback`. For a production application, you might add a
+     redirect URL of:
+
+     ```
+     https://www.example.com/slack_sign_in/callback
+     ```
+
+     To sign in with Slack in development, you would likely also add a redirect
+     URL for your local environment. Something like:
+
+     ```
+     http://localhost:3000/slack_sign_in/callback
+     ```
+
+     <details>
+       <summary>Slack app redirect URLs visual guide :framed_picture:</summary>
+
+       ![Slack App Redirect URLs](./doc/images/redirect_urls.png)
+     </details>
+
 ## Contributing
 
 For information on how to contribute to this project, check out the
