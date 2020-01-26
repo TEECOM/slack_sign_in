@@ -88,7 +88,7 @@ class SlackSignIn::CallbackTest < ActionDispatch::IntegrationTest
   end
 
   def stub_token_request(code:, status:, response:)
-    stub_request(:post, "https://slack.com/api/oauth.access").with(
+    stub_request(:post, SlackSignIn::TOKEN_URL).with(
       body: {
         grant_type: "authorization_code",
         code: code,

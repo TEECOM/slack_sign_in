@@ -8,8 +8,8 @@ module SlackSignIn
       @_client ||= OAuth2::Client.new(
         SlackSignIn.client_id,
         SlackSignIn.client_secret,
-        authorize_url: "https://slack.com/oauth/authorize",
-        token_url: "https://slack.com/api/oauth.access",
+        authorize_url: SlackSignIn::AUTHORIZE_URL,
+        token_url: SlackSignIn::TOKEN_URL,
         redirect_uri: callback_url,
       )
     end

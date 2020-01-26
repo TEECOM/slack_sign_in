@@ -5,7 +5,7 @@ class SlackSignIn::AuthorizationTest < ActionDispatch::IntegrationTest
     post slack_sign_in.authorization_url, params: {proceed_to: "http://www.example.com/sessions"}
 
     assert_response :redirect
-    assert_match "https://slack.com/oauth/authorize", response.location
+    assert_match SlackSignIn::AUTHORIZE_URL, response.location
 
     assert_equal FAKE_SLACK_CLIENT_ID, url_params[:client_id]
     assert_equal "code", url_params[:response_type]
