@@ -25,5 +25,9 @@ module SlackSignIn
         mount SlackSignIn::Engine, at: app.config.slack_sign_in.root || "slack_sign_in"
       end
     end
+
+    initializer "slack_sign_in.parameter_filters" do |app|
+      app.config.filter_parameters << :code
+    end
   end
 end
