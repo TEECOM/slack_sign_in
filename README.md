@@ -16,6 +16,8 @@ This project adheres to the Contributor Covenant
 uphold this code. Please report unacceptable behavior to
 research@teecom.com.
 
+In addition to the documentation here, we also have a **[Getting Started with `slack_sign_in`](https://vimeo.com/387819353)** video :movie_camera:.
+
 ## Installation
 
 Add `slack_sign_in` to your Rails app's Gemfile and run `bundle install`:
