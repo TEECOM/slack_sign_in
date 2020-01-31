@@ -18,6 +18,6 @@ class SlackSignIn::AuthorizationsController < SlackSignIn::ApplicationController
   end
 
   def state
-    @_state ||= SecureRandom.base64(24)
+    @_state ||= SecureRandom.urlsafe_base64(24)
   end
 end
