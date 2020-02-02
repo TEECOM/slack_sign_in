@@ -1,4 +1,5 @@
 require "oauth2"
+require "slack_sign_in/test_client"
 
 module SlackSignIn
   class Engine < ::Rails::Engine
