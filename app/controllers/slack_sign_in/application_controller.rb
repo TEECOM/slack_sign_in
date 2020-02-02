@@ -5,7 +5,7 @@ module SlackSignIn
     private
 
     def client
-      @_client ||= OAuth2::Client.new(
+      @_client ||= SlackSignIn.client.new(
         SlackSignIn.client_id,
         SlackSignIn.client_secret,
         authorize_url: SlackSignIn::AUTHORIZE_URL,
