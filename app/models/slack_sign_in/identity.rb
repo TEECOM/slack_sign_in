@@ -19,6 +19,14 @@ class SlackSignIn::Identity
     params.dig("user", "name")
   end
 
+  def user_name
+    params.dig("user", "name")
+  end
+
+  def team_name
+    params.dig("team", "name")
+  end
+
   def email
     params.dig("user", "email")
   end
